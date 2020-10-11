@@ -3,7 +3,6 @@
 
 namespace App\UserInterface\Presenter;
 
-
 use App\UserInterface\ViewModel\TodoListViewModel;
 use MatCaps\Beta\Domain\Entity\Todo;
 use MatCaps\Beta\Domain\Presenter\TodoListPresenterInterface;
@@ -20,7 +19,7 @@ class TodoListPresenter implements TodoListPresenterInterface
     public function present(TodoListResponse $response)
     {
         $this->todosViewModel = new TodoListViewModel(
-            array_map(static fn(Todo $todo) => $todo->getContent() , $response->getTodos())
+            array_map(static fn(Todo $todo) => $todo->getContent(), $response->getTodos())
         );
     }
 
@@ -31,6 +30,4 @@ class TodoListPresenter implements TodoListPresenterInterface
     {
         return $this->todosViewModel;
     }
-
-
 }

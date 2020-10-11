@@ -3,7 +3,6 @@
 
 namespace App\UserInterface\ViewModel;
 
-
 class TodoListViewModel
 {
     private array $todos = [];
@@ -24,8 +23,4 @@ class TodoListViewModel
     {
         return $this->todos;
     }
-
-
-
-
 }

@@ -1,48 +1,53 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Entity;
 
+use DateTimeInterface;
+use function uniqid;
 
 /**
- * Class Todo
- * @package MatCaps\Beta\Domain\Entity
+ * Class Todo.
  */
 class Todo
 {
-    /** @var string  */
+    /** @var string */
     private string $content;
-    /** @var bool  */
+    /** @var bool */
     private bool $done = false;
+    /** @var DateTimeInterface|null */
+    private ?DateTimeInterface $dueAt;
+    /** @var string */
+    private string $id;
 
     /**
      * Todo constructor.
      * @param string $content
+     * @param DateTimeInterface|null $dueAt
      */
-    public function __construct(string $content)
+    public function __construct(string $content, ?DateTimeInterface $dueAt = null)
     {
         $this->content = $content;
+        $this->dueAt = $dueAt;
+        $this->id = uniqid('todo', true);
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @return bool
-     */
     public function isDone(): bool
     {
         return $this->done;
     }
 
+    public function getDueAt(): ?DateTimeInterface
+    {
+        return $this->dueAt;
+    }
 
-
-
-
-
+    public function getId(): string
+    {
+        return $this->id;
+    }
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Response;
-
 
 class TodoListResponse
 {
@@ -10,22 +8,14 @@ class TodoListResponse
 
     /**
      * TodoListResponse constructor.
-     * @param array $todos
      */
     public function __construct(array $todos)
     {
         $this->todos = $todos;
     }
 
-    /**
-     * @return array
-     */
     public function getTodos(): array
     {
         return $this->todos;
     }
-
-
-
-
 }
