@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Tests;
 
 use App\Infrastructure\Ports\Secondary\TodosRepository;
@@ -47,4 +46,3 @@ it(
         expect($todo->isDone())->toBeFalse();
     }
 );
-

@@ -3,6 +3,7 @@
 namespace MatCaps\Beta\Domain\Entity;
 
 use DateTimeInterface;
+
 use function uniqid;
 
 /**
