@@ -24,10 +24,11 @@ class Todo
      * @param string $content
      * @param DateTimeInterface|null $dueAt
      */
-    public function __construct(string $content, ?DateTimeInterface $dueAt = null)
+    public function __construct(string $content, ?DateTimeInterface $dueAt = null, $done = false)
     {
         $this->content = $content;
         $this->dueAt = $dueAt;
+        $this->done = $done;
         $this->id = uniqid('todo', true);
     }
 
@@ -49,5 +50,10 @@ class Todo
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function toggleDoneStatus()
+    {
+        $this->done = !$this->done;
     }
 }

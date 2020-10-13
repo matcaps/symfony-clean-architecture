@@ -11,4 +11,8 @@ interface TodoListGateway
     public function add(Todo $todo);
 
     public function getCurrentCount();
+
+    public function findOneBy(array $pairs) : ?Todo;
+
+    public function findBy(array $pair): array;
 }
