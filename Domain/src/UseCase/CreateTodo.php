@@ -2,12 +2,13 @@
 
 namespace MatCaps\Beta\Domain\UseCase;
 
-use function Assert\lazy;
 use Assert\LazyAssertionException;
 use DateTimeImmutable;
 use MatCaps\Beta\Domain\Entity\Todo;
 use MatCaps\Beta\Domain\Exception\InvalidTodoContentException;
 use MatCaps\Beta\Domain\Gateway\TodoListGateway;
+
+use function Assert\lazy;
 
 /**
  * Class CreateTodo.
@@ -19,6 +20,7 @@ class CreateTodo
 
     /**
      * CreateTodo constructor.
+     * @param TodoListGateway $gateway
      */
     public function __construct(TodoListGateway $gateway)
     {
@@ -28,6 +30,7 @@ class CreateTodo
     /**
      * @param $content
      *
+     * @return Todo
      * @throws InvalidTodoContentException
      */
     public function execute($content): Todo
