@@ -3,7 +3,6 @@
 namespace MatCaps\Beta\Domain\Tests;
 
 use App\Infrastructure\Ports\Secondary\TodosRepository;
-
 use MatCaps\Beta\Domain\Entity\Todo;
 
 use function array_rand;
