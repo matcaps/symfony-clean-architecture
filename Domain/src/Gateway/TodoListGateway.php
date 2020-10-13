@@ -15,4 +15,6 @@ interface TodoListGateway
     public function findOneBy(array $pairs): ?Todo;
 
     public function findBy(array $pair): array;
+
+    public function remove(Todo $todo): void;
 }

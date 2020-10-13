@@ -91,4 +91,9 @@ class TodosRepository implements TodoListGateway
             }
         );
     }
+
+    public function remove($id): void
+    {
+        unset($this->repository[$id]);
+    }
 }
