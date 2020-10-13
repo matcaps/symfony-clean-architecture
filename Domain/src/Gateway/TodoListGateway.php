@@ -12,7 +12,7 @@ interface TodoListGateway
 
     public function getCurrentCount();
 
-    public function findOneBy(array $pairs) : ?Todo;
+    public function findOneBy(array $pairs): ?Todo;
 
     public function findBy(array $pair): array;
 }
