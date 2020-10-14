@@ -8,7 +8,7 @@ use function PHPUnit\Framework\assertFalse;
 it(
     "has an todo object that should be identifiable as late",
     function () {
-        $yesterday = (new DateTimeImmutable)->sub(new DateInterval("P1D"));
+        $yesterday = (new DateTimeImmutable())->sub(new DateInterval("P1D"));
         $todo = new Todo("My todo late todo", $yesterday);
 
         assertTrue($todo->isLate());
