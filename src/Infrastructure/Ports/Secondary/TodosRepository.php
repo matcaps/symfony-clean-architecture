@@ -20,6 +20,7 @@ class TodosRepository implements TodoListGateway
 
     /**
      * TodosRepository constructor.
+     * @param array $repository
      */
     public function __construct(array $repository = [])
     {

@@ -8,14 +8,16 @@ use MatCaps\Beta\Domain\Entity\Todo;
 
 use function PHPUnit\Framework\assertCount;
 
-it("should present a list of 10 todos which should be closed today",
+it(
+    "should present a list of 10 todos which should be closed today",
     function (TodosRepository $repo) {
         $todos = $repo->findAllDueToday();
         assertCount(10, $todos);
     }
 )->with([todoFromTodayRepositoryProvider()]);
 
-it("should not find todos which have to be closed today",
+it(
+    "should not find todos which have to be closed today",
     function (TodosRepository $repo) {
         $todos = $repo->findAllDueToday();
         assertCount(0, $todos);
