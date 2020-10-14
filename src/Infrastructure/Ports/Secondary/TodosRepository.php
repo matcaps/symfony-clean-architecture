@@ -1,20 +1,17 @@
 <?php
 
-
 namespace App\Infrastructure\Ports\Secondary;
-
-use MatCaps\Beta\Domain\Entity\Todo;
-use MatCaps\Beta\Domain\Gateway\TodoListGateway;
 
 use function array_fill;
 use function array_filter;
 use function array_key_first;
 use function array_values;
-use function var_export;
+use DateTimeImmutable;
+use MatCaps\Beta\Domain\Entity\Todo;
+use MatCaps\Beta\Domain\Gateway\TodoListGateway;
 
 /**
- * Class TodosRepository
- * @package App\Infrastructure\Ports\Secondary
+ * Class TodosRepository.
  */
 class TodosRepository implements TodoListGateway
 {
@@ -23,13 +20,11 @@ class TodosRepository implements TodoListGateway
 
     /**
      * TodosRepository constructor.
-     * @param array $repository
      */
     public function __construct(array $repository = [])
     {
         $this->repository = $repository;
     }
-
 
     /**
      * @return array
@@ -39,9 +34,6 @@ class TodosRepository implements TodoListGateway
         return array_fill(0, 20, new Todo('Todo xxx'));
     }
 
-    /**
-     * @param Todo $todo
-     */
     public function add(Todo $todo)
     {
         $this->repository[$todo->getId()] = $todo;
@@ -55,10 +47,6 @@ class TodosRepository implements TodoListGateway
         return count($this->repository);
     }
 
-    /**
-     * @param string $id
-     * @return Todo|null
-     */
     public function findById(string $id): ?Todo
     {
         return $this->repository[$id];
@@ -95,5 +83,16 @@ class TodosRepository implements TodoListGateway
     public function remove($id): void
     {
         unset($this->repository[$id]);
+    }
+
+    public function findAllDueToday(): array
+    {
+        return array_filter(
+            $this->repository,
+            function (Todo $todo) {
+                return null !== $todo->getDueAt()
+                    && $todo->getDueAt()->format('Y-m-d') === (new DateTimeImmutable())->format('Y-m-d');
+            }
+        );
     }
 }

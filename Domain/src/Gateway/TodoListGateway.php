@@ -17,4 +17,6 @@ interface TodoListGateway
     public function findBy(array $pair): array;
 
     public function remove(Todo $todo): void;
+
+    public function findAllDueToday(): array;
 }
