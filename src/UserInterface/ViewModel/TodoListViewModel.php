@@ -3,13 +3,15 @@
 
 namespace App\UserInterface\ViewModel;
 
+use MatCaps\Beta\Domain\Entity\Todo;
+
 class TodoListViewModel
 {
-    private array $todos = [];
+    private array $todos;
 
     /**
      * TodoListViewModel constructor.
-     * @param String[] $todos
+     * @param Todo[] $todos
      */
     public function __construct(array $todos)
     {

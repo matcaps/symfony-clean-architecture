@@ -9,6 +9,22 @@ use MatCaps\Beta\Domain\UseCase\CreateTodo;
 
 use function PhpUnit\Framework\assertEquals;
 use function PhpUnit\Framework\assertInstanceOf;
+use function PhpUnit\Framework\assertSame;
+use function PhpUnit\Framework\assertNull;
+
+it(
+    "should create a todo instance",
+    function () {
+        $todoRepository = new TodosRepository();
+        $useCase = new CreateTodo($todoRepository);
+        $todo = $useCase->execute('Mon premier todo');
+
+        assertInstanceOf(Todo::class, $todo);
+        assertSame("Mon premier todo", $todo->getContent());
+        assertNull($todo->getDueAt());
+    }
+);
+
 
 it(
     'should create a Todo',

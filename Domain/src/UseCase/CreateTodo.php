@@ -35,7 +35,7 @@ class CreateTodo
      */
     public function execute($content): Todo
     {
-        $todo = new Todo($content, new DateTimeImmutable());
+        $todo = new Todo($content);
 
         try {
             $this->validate($todo);

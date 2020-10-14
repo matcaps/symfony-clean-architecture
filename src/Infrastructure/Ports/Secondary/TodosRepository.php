@@ -19,7 +19,7 @@ use function var_export;
 class TodosRepository implements TodoListGateway
 {
     /** @var array */
-    private array $repository = [];
+    private array $repository;
 
     /**
      * TodosRepository constructor.
