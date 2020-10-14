@@ -2,6 +2,7 @@
 
 namespace MatCaps\Beta\Domain\Entity;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 
 use function uniqid;
@@ -43,6 +44,10 @@ class Todo
         return $this->done;
     }
 
+    /**
+     * @return DateTimeInterface|null
+     * @Coverage
+     */
     public function getDueAt(): ?DateTimeInterface
     {
         return $this->dueAt;
@@ -53,8 +58,17 @@ class Todo
         return $this->id;
     }
 
-    public function toggleDoneStatus()
+    public function toggleDoneStatus(): void
     {
         $this->done = !$this->done;
+    }
+
+    public function isLate(): bool
+    {
+        if ($this->dueAt === null) {
+            return false;
+        }
+
+        return $this->dueAt < new DateTimeImmutable();
     }
 }
