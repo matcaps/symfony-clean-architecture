@@ -15,7 +15,7 @@ class Todo
     /** @var string */
     private string $content;
     /** @var bool */
-    private bool $done = false;
+    private bool $done;
     /** @var DateTimeInterface|null */
     private ?DateTimeInterface $dueAt;
     /** @var string */
@@ -25,8 +25,9 @@ class Todo
      * Todo constructor.
      * @param string $content
      * @param DateTimeInterface|null $dueAt
+     * @param bool $done
      */
-    public function __construct(string $content, ?DateTimeInterface $dueAt = null, $done = false)
+    public function __construct(string $content, ?DateTimeInterface $dueAt = null, bool $done = false)
     {
         $this->content = $content;
         $this->dueAt = $dueAt;
@@ -34,11 +35,17 @@ class Todo
         $this->id = uniqid('todo', true);
     }
 
+    /**
+     * @return string
+     */
     public function getContent(): string
     {
         return $this->content;
     }
 
+    /**
+     * @return bool
+     */
     public function isDone(): bool
     {
         return $this->done;
@@ -53,16 +60,25 @@ class Todo
         return $this->dueAt;
     }
 
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
+    /**
+     *
+     */
     public function toggleDoneStatus(): void
     {
         $this->done = !$this->done;
     }
 
+    /**
+     * @return bool
+     */
     public function isLate(): bool
     {
         if ($this->dueAt === null) {

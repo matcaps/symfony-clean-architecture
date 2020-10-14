@@ -15,12 +15,12 @@ use MatCaps\Beta\Domain\Gateway\TodoListGateway;
  */
 class TodosRepository implements TodoListGateway
 {
-    /** @var array */
+    /** @var array<Todo> */
     private array $repository;
 
     /**
      * TodosRepository constructor.
-     * @param array $repository
+     * @param array<Todo> $repository
      */
     public function __construct(array $repository = [])
     {
@@ -28,14 +28,17 @@ class TodosRepository implements TodoListGateway
     }
 
     /**
-     * @return array
+     * @return array<Todo>
      */
-    public function findAll()
+    public function findAll(): array
     {
         return array_fill(0, 20, new Todo('Todo xxx'));
     }
 
-    public function add(Todo $todo)
+    /**
+     * @param Todo $todo
+     */
+    public function add(Todo $todo): void
     {
         $this->repository[$todo->getId()] = $todo;
     }
@@ -43,16 +46,24 @@ class TodosRepository implements TodoListGateway
     /**
      * @return int
      */
-    public function getCurrentCount()
+    public function getCurrentCount(): int
     {
         return count($this->repository);
     }
 
+    /**
+     * @param string $id
+     * @return Todo|null
+     */
     public function findById(string $id): ?Todo
     {
         return $this->repository[$id];
     }
 
+    /**
+     * @param array<string,mixed> $pair
+     * @return Todo|null
+     */
     public function findOneBy(array $pair): ?Todo
     {
         $method = array_key_first($pair);
@@ -68,6 +79,10 @@ class TodosRepository implements TodoListGateway
         )[0] ?? null;
     }
 
+    /**
+     * @param array<string,mixed> $pair
+     * @return array<Todo>
+     */
     public function findBy(array $pair): array
     {
         $method = array_key_first($pair);
@@ -81,11 +96,17 @@ class TodosRepository implements TodoListGateway
         );
     }
 
-    public function remove($id): void
+    /**
+     * @param Todo $todo
+     */
+    public function remove(Todo $todo): void
     {
-        unset($this->repository[$id]);
+        unset($this->repository[$todo->getId()]);
     }
 
+    /**
+     * @return array<Todo>
+     */
     public function findAllDueToday(): array
     {
         return array_filter(

@@ -16,7 +16,7 @@ class TodoListPresenter implements TodoListPresenterInterface
     /**
      * @param TodoListResponse $response
      */
-    public function present(TodoListResponse $response)
+    public function present(TodoListResponse $response): void
     {
         $this->todosViewModel = new TodoListViewModel(
             array_map(static fn(Todo $todo) => $todo->getContent(), $response->getTodos())

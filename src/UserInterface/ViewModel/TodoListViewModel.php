@@ -7,6 +7,7 @@ use MatCaps\Beta\Domain\Entity\Todo;
 
 class TodoListViewModel
 {
+    /** @var Todo[]  */
     private array $todos;
 
     /**
@@ -19,7 +20,7 @@ class TodoListViewModel
     }
 
     /**
-     * @return string[]
+     * @return Todo[]
      */
     public function getTodos(): array
     {

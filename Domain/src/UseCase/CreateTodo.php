@@ -28,12 +28,11 @@ class CreateTodo
     }
 
     /**
-     * @param $content
-     *
+     * @param string $content
      * @return Todo
      * @throws InvalidTodoContentException
      */
-    public function execute($content): Todo
+    public function execute(string $content): Todo
     {
         $todo = new Todo($content);
 
@@ -48,7 +47,10 @@ class CreateTodo
         return $todo;
     }
 
-    protected function validate(Todo $todo)
+    /**
+     * @param Todo $todo
+     */
+    protected function validate(Todo $todo): void
     {
         lazy()->that($todo->getContent())->notBlank()
             ->verifyNow();
