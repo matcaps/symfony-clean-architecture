@@ -1,4 +1,7 @@
 
+.env.test
+phpunit.xml.*
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -8,15 +11,18 @@
 /var/
 /vendor/
 /.idea
+**/.DS_Store
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
+bin/phpunit
 ###< symfony/phpunit-bridge ###
 
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
+.php_cs.cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
