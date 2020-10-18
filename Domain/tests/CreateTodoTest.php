@@ -7,16 +7,20 @@ use MatCaps\Beta\Domain\Entity\Todo;
 use MatCaps\Beta\Domain\Exception\InvalidTodoContentException;
 use MatCaps\Beta\Domain\UseCase\CreateTodo;
 
+use function beforeEach;
 use function PhpUnit\Framework\assertEquals;
 use function PhpUnit\Framework\assertInstanceOf;
 use function PhpUnit\Framework\assertSame;
 use function PhpUnit\Framework\assertNull;
 
+beforeEach(function () {
+    $this->todoRepository = new TodosRepository();
+});
+
 it(
     "should create a todo instance",
     function () {
-        $todoRepository = new TodosRepository();
-        $useCase = new CreateTodo($todoRepository);
+        $useCase = new CreateTodo($this->todoRepository);
         $todo = $useCase->execute('Mon premier todo');
 
         assertInstanceOf(Todo::class, $todo);
@@ -29,15 +33,14 @@ it(
 it(
     'should create a Todo',
     function () {
-        $todoRepository = new TodosRepository();
-        $records = $todoRepository->getCurrentCount();
+        $records = $this->todoRepository->getCurrentCount();
 
-        $useCase = new CreateTodo($todoRepository);
+        $useCase = new CreateTodo($this->todoRepository);
         $todo = $useCase->execute('Mon premier todo');
 
         assertInstanceOf(Todo::class, $todo);
-        assertEquals($records + 1, $todoRepository->getCurrentCount());
-        assertEquals($todoRepository->findById($todo->getId()), $todo);
+        assertEquals($records + 1, $this->todoRepository->getCurrentCount());
+        assertEquals($this->todoRepository->findById($todo->getId()), $todo);
     }
 );
 

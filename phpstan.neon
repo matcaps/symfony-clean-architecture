@@ -3,3 +3,8 @@ parameters:
   paths:
     - Domain
     - src
+
+#  ignoreErrors:
+#      -
+#        message: '#Undefined variable: \$this#'
+#        path: Domain/tests/*
