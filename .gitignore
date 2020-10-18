@@ -1,4 +1,7 @@
 
+.env.test
+phpunit.xml.*
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -15,9 +18,11 @@
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
+bin/phpunit
 ###< symfony/phpunit-bridge ###
 
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
+.php_cs.cache
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
