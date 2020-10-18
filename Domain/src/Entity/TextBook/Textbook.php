@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookDateException;
+use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
 use MatCaps\Beta\Domain\Request\TextBook\AddTextBookRequest;
 
 class Textbook
@@ -25,7 +25,7 @@ class Textbook
      * @param DateTimeInterface $dueAt
      * @param Course $course
      * @param SchoolClass $schoolClass
-     * @throws InvalidTextBookDateException
+     * @throws InvalidTextBookException
      */
     public function __construct(
         string $id,
@@ -35,7 +35,7 @@ class Textbook
         SchoolClass $schoolClass
     ) {
         if ($dueAt < (new DateTimeImmutable())->add(new DateInterval("P1D"))) {
-            throw new InvalidTextBookDateException();
+            throw new InvalidTextBookException();
         }
 
         $this->id = $id;

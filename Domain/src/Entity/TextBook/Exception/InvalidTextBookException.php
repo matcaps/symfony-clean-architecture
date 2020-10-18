@@ -4,7 +4,7 @@ namespace MatCaps\Beta\Domain\Entity\TextBook\Exception;
 
 use Exception;
 
-class InvalidTextBookDateException extends Exception
+class InvalidTextBookException extends Exception
 {
 
 }

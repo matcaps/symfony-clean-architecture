@@ -9,7 +9,7 @@ use Exception;
 use Generator;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookDateException;
+use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
 use MatCaps\Beta\Domain\Presenter\TextBook\TextBookPresenterInterface;
 use MatCaps\Beta\Domain\Request\TextBook\AddTextBookRequest;
@@ -91,9 +91,11 @@ class CreateTextBookTest extends TestCase
         string $content,
         ?DateTimeInterface $dueAt,
         Course $course,
-        SchoolClass $schoolClass
+        SchoolClass $schoolClass,
+        string $message
     ): void {
-        $this->expectException(InvalidTextBookDateException::class);
+        $this->expectException(InvalidTextBookException::class);
+        $this->expectExceptionMessage($message);
 
         $request = AddTextBookRequest::create(
             $id,
@@ -113,24 +115,19 @@ class CreateTextBookTest extends TestCase
     {
         yield [
             Uuid::uuid4(),
-            "content",
-            (new DateTimeImmutable())->add(new DateInterval("P1D")),
-            new Course(),
-            new SchoolClass()
-        ];
-        yield [
-            Uuid::uuid4(),
             "",
             (new DateTimeImmutable())->add(new DateInterval("P1D")),
             new Course(),
-            new SchoolClass()
+            new SchoolClass(),
+            "Content cannot be null"
         ];
         yield [
             Uuid::uuid4(),
             "content",
             (new DateTimeImmutable())->sub(new DateInterval("P1D")),
             new Course(),
-            new SchoolClass()
+            new SchoolClass(),
+            "Date cannot be in the past"
         ];
     }
 }

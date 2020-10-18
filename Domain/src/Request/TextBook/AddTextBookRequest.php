@@ -8,7 +8,7 @@ use Assert\LazyAssertionException;
 use DateTimeImmutable;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookDateException;
+use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
 use Ramsey\Uuid\UuidInterface;
 
 class AddTextBookRequest
@@ -21,7 +21,7 @@ class AddTextBookRequest
 
     /**
      * AddTextBookRequest constructor.
-     * @throws InvalidTextBookDateException
+     * @throws InvalidTextBookException
      */
     public function __construct(
         UuidInterface $uuid4,
@@ -40,17 +40,17 @@ class AddTextBookRequest
     }
 
     /**
-     * @throws InvalidTextBookDateException
+     * @throws InvalidTextBookException
      */
     protected function validate(): void
     {
         try {
             Assert::lazy()
-                ->that($this->content)->notBlank("Content cannot be null")
-                ->that($this->dueAt)->greaterThan(new DateTimeImmutable())
+                ->that($this->content)->notEmpty("Content cannot be null")
+                ->that($this->dueAt)->greaterThan(new DateTimeImmutable(), "Date cannot be in the past")
                 ->verifyNow();
         } catch (LazyAssertionException $e) {
-            throw new InvalidTextBookDateException($e->getMessage());
+            throw new InvalidTextBookException($e->getMessage());
         }
     }
 

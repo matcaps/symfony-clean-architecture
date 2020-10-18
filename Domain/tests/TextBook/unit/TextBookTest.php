@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookDateException;
+use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -42,7 +42,7 @@ class TextBookTest extends TestCase
 
     public function shouldThrowAnInvalidTextBookDateException(): void
     {
-        $this->expectException(InvalidTextBookDateException::class);
+        $this->expectException(InvalidTextBookException::class);
 
         $schoolClass = new SchoolClass();
         $course = new Course();
