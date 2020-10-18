@@ -3,6 +3,7 @@
 namespace MatCaps\Beta\Domain\UseCase\Auth;
 
 use MatCaps\Beta\Domain\Entity\Auth\User;
+use MatCaps\Beta\Domain\Exception\Auth\InvalidUserException;
 use MatCaps\Beta\Domain\Gateway\UserGateway;
 use MatCaps\Beta\Domain\Request\Auth\LoginRequest;
 
@@ -30,14 +31,23 @@ class AuthLoginUseCase
 
     /**
      * @return User|null
+     * @throws InvalidUserException
      */
     public function execute(): ?User
     {
-        return $this->repository->findOneByUsernameAndPassword(
+        $result = $this->repository->findOneByUsernameAndPassword(
             $this->request->getUsername(),
             $this->request->getPassword()
         );
+
+        if (null === $result) {
+            throw new InvalidUserException("User cannot be authenticated");
+        }
+
+        return $result;
     }
+
+
 
     /**
      * @return LoginRequest

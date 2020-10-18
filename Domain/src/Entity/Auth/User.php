@@ -16,6 +16,8 @@ class User
     private string $password;
     /** @var string */
     private $id;
+    /** @var string  */
+    private $clearPassword;
 
     /**
      * User constructor.
@@ -26,9 +28,13 @@ class User
     {
         $this->username = $username;
         $this->password = $password;
+        $this->clearPassword = $password;
         $this->id = uniqid("user{$username}", true);
     }
 
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
@@ -48,5 +54,13 @@ class User
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClearPassword(): string
+    {
+        return $this->clearPassword;
     }
 }

@@ -10,9 +10,18 @@ help: ## Affiche cette aide
 test: ##Lance les tests
 	./vendor/bin/pest
 
-.PHONY: style
-style:  ##formattage
+.PHONY: format
+format: ##formattage
 	./vendor/bin/phpcbf
 	./vendor/bin/phpcs
 
+.PHONY: analyse
+analyse: ##formattage
+	./vendor/bin/phpstan analyse
+
+.PHONY: commit
+commit: ##formattage
+	./vendor/bin/phpcbf
+	./vendor/bin/phpcs
+	./vendor/bin/phpstan analyse
 

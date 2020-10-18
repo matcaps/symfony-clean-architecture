@@ -10,7 +10,7 @@ use function array_filter;
 
 class LoginRepository implements UserGateway
 {
-    /** @var array<User>  */
+    /** @var array<User> */
     private array $users = [];
 
     /**
@@ -20,9 +20,14 @@ class LoginRepository implements UserGateway
      */
     public function findOneByUsernameAndPassword(string $username, string $password): ?User
     {
-        return array_values(array_filter($this->users, static function (User $user) use ($username) {
-            return $user->getUsername() === $username;
-        }))[0] ?? null;
+        return array_values(
+            array_filter(
+                $this->users,
+                static function (User $user) use ($username, $password) {
+                        return $user->getUsername() === $username && $user->getClearPassword() === $password;
+                }
+            )
+        )[0] ?? null;
     }
 
     /**
