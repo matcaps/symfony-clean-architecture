@@ -1,0 +1,27 @@
+@startuml
+
+package textbook{
+
+class TextBook
+class TextBookStudent
+
+}
+
+package generics{
+
+class Course
+class Student
+class SchoolClass
+class SchoolYear
+
+}
+
+SchoolClass "1" -- Student
+SchoolClass "1" -- "*" SchoolYear
+SchoolClass "*" -- "*" Course
+TextBook "*" -- "1"  Course
+TextBook "*" -- "1" SchoolClass
+
+
+
+@enduml
