@@ -1,6 +1,6 @@
 <?php
 
-namespace MatCaps\Beta\Domain\Entity\TextBook\Exception;
+namespace MatCaps\Beta\Domain\Exception\TextBook;
 
 use Exception;
 

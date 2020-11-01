@@ -7,8 +7,8 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
+use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 

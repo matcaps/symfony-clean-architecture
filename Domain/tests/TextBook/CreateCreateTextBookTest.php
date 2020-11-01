@@ -9,7 +9,7 @@ use Exception;
 use Generator;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
+use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
 use MatCaps\Beta\Domain\Presenter\TextBook\CreateTextBookPresenterInterface;
 use MatCaps\Beta\Domain\Request\TextBook\AddTextBookRequest;
@@ -21,7 +21,7 @@ use Ramsey\Uuid\Rfc4122\Validator;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class CreateTextBookTest extends TestCase
+class CreateCreateTextBookTest extends TestCase
 {
     private CreateTextBook $useCase;
     private Course $course;
