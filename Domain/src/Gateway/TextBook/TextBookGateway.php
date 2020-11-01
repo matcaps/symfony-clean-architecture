@@ -2,6 +2,7 @@
 
 namespace MatCaps\Beta\Domain\Gateway\TextBook;
 
+use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 
 interface TextBookGateway

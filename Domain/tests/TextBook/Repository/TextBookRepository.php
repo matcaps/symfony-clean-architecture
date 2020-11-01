@@ -2,6 +2,7 @@
 
 namespace MatCaps\Beta\Domain\Tests\TextBook\Repository;
 
+use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
 

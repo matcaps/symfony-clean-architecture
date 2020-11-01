@@ -2,37 +2,36 @@
 
 namespace MatCaps\Beta\Domain\UseCase\TextBook;
 
+use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
+use MatCaps\Beta\Domain\Gateway\Generics\SchoolClassGateway;
 use MatCaps\Beta\Domain\Gateway\TextBook\SharedTextBookGateway;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
+use MatCaps\Beta\Domain\Presenter\TextBook\ShareTextBookPresenterInterface;
 use MatCaps\Beta\Domain\Request\TextBook\ShareTextBookRequest;
+use MatCaps\Beta\Domain\Response\TextBook\ShareTextBookResponse;
 
 class ShareTextBook
 {
     private ShareTextBookRequest $request;
-    private TextBookGateway $textBookGateway;
-    private SharedTextBookGateway $sharedTextBookGateway;
+    private SharedTextBookGateway $textBookGateway;
+    private SchoolClass $schoolClass;
+    private ShareTextBookPresenterInterface $presenter;
 
-    /**
-     * ShareTextBook constructor.
-     * @param ShareTextBookRequest $request
-     * @param TextBookGateway $textBookGateway
-     * @param SharedTextBookGateway $sharedTextBookGateway
-     */
     public function __construct(
         ShareTextBookRequest $request,
-        TextBookGateway $textBookGateway,
-        SharedTextBookGateway $sharedTextBookGateway
+        SharedTextBookGateway $textBookGateway,
+        ShareTextBookPresenterInterface $presenter
     ) {
         $this->request = $request;
         $this->textBookGateway = $textBookGateway;
-        $this->sharedTextBookGateway = $sharedTextBookGateway;
+        $this->presenter = $presenter;
     }
 
     public function execute(): void
     {
-        $id = $this->request->getTextBookId();
-        $textbook = $this->textBookGateway->findById($id);
+        $this->textBookGateway->share($this->request->getTextBook(), $this->request->getSchoolClass());
+        $sharedTextBookEntries = $this->textBookGateway->findAllSharedWith($this->request->getSchoolClass());
 
-        $textbook->shareWithSchoolClass($this->request->getSchoolClassId());
+        $this->presenter->present(new ShareTextBookResponse($sharedTextBookEntries));
     }
 }

@@ -2,39 +2,37 @@
 
 namespace MatCaps\Beta\Domain\Request\TextBook;
 
+use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
+use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
+
 /**
  * Class ShareTextBookRequest
  * @package MatCaps\Beta\Domain\Request\TextBook
  */
 class ShareTextBookRequest
 {
-    private string $textBookId;
-    private string $schoolClassId;
+
+    private SchoolClass $schoolClass;
+    private Textbook $textBook;
 
     /**
      * ShareTextBookRequest constructor.
-     * @param string $textBookId
-     * @param string $schoolClassId
+     * @param Textbook $textBook
+     * @param SchoolClass $schoolClass
      */
-    public function __construct(string $textBookId, string $schoolClassId)
+    public function __construct(TextBook $textBook, SchoolClass $schoolClass)
     {
-        $this->textBookId = $textBookId;
-        $this->schoolClassId = $schoolClassId;
+        $this->textBook = $textBook;
+        $this->schoolClass = $schoolClass;
     }
 
-    /**
-     * @return string
-     */
-    public function getTextBookId(): string
+    public function getTextBook(): Textbook
     {
-        return $this->textBookId;
+        return $this->textBook;
     }
 
-    /**
-     * @return string
-     */
-    public function getSchoolClassId(): string
+    public function getSchoolClass(): SchoolClass
     {
-        return $this->schoolClassId;
+        return $this->schoolClass;
     }
 }

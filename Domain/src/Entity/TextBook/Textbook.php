@@ -95,13 +95,4 @@ class Textbook
     {
         return $this->dueAt;
     }
-
-    /**
-     * @param string $schoolClass
-     * @return bool
-     */
-    public function shareWithSchoolClass(string $schoolClass): bool
-    {
-        return false;
-    }
 }

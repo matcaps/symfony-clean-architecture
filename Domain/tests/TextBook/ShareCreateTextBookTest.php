@@ -9,7 +9,12 @@ use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
 use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
+use MatCaps\Beta\Domain\Gateway\Generics\SchoolClassGateway;
+use MatCaps\Beta\Domain\Presenter\TextBook\CreateTextBookPresenterInterface;
+use MatCaps\Beta\Domain\Presenter\TextBook\ShareTextBookPresenterInterface;
 use MatCaps\Beta\Domain\Request\TextBook\ShareTextBookRequest;
+use MatCaps\Beta\Domain\Response\TextBook\AddTextBookResponse;
+use MatCaps\Beta\Domain\Response\TextBook\ShareTextBookResponse;
 use MatCaps\Beta\Domain\Tests\TextBook\Repository\TextBookRepository;
 use MatCaps\Beta\Domain\UseCase\TextBook\ShareTextBook;
 use PHPUnit\Framework\TestCase;
@@ -26,24 +31,32 @@ use Ramsey\Uuid\UuidInterface;
  * Class ShareTextBookTest
  * @package MatCaps\Beta\Domain\Tests\TextBook
  */
-class ShareTextBookTest extends TestCase
+class ShareCreateTextBookTest extends TestCase
 {
     private TextBookRepository $textBookRepository;
     private Textbook $textBook;
     private SchoolClass $schoolClass;
     private SharedTextBookRepository $sharedTextBookRepository;
     private UuidInterface $uuid;
+    private ShareTextBookPresenterInterface $presenter;
 
     /**
-     *
      * @throws InvalidTextBookException
      */
     protected function setUp(): void
     {
+        $this->uuid = Uuid::uuid4();
         $this->textBookRepository = new TextBookRepository();
         $this->sharedTextBookRepository = new SharedTextBookRepository();
         $this->schoolClass = new SchoolClass();
+        $this->presenter = new class implements ShareTextBookPresenterInterface {
+            public ShareTextBookResponse $response;
 
+            public function present(ShareTextBookResponse $response): void
+            {
+                $this->response = $response;
+            }
+        };
         $this->textBook = new Textbook(
             $this->uuid->toString(),
             "this is content to share to all student",
@@ -55,11 +68,17 @@ class ShareTextBookTest extends TestCase
         $this->textBookRepository->add($this->textBook);
     }
 
-    public function testShareSuccefully(): void
+    public function testShareSuccessfully(): void
     {
-        $request = new ShareTextBookRequest($this->textBook->getId(), $this->schoolClass->getId());
-        $useCase = new ShareTextBook($request, $this->textBookRepository, $this->sharedTextBookRepository);
+        $request = new ShareTextBookRequest($this->textBook, $this->schoolClass);
+        $useCase = new ShareTextBook(
+            $request,
+            $this->sharedTextBookRepository,
+            $this->presenter
+        );
 
         $useCase->execute();
+
+        self::assertInstanceOf(ShareTextBookResponse::class, $this->presenter->response);
     }
 }

@@ -4,7 +4,7 @@ namespace MatCaps\Beta\Domain\UseCase\TextBook;
 
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
-use MatCaps\Beta\Domain\Presenter\TextBook\TextBookPresenterInterface;
+use MatCaps\Beta\Domain\Presenter\TextBook\CreateTextBookPresenterInterface;
 use MatCaps\Beta\Domain\Request\TextBook\AddTextBookRequest;
 use MatCaps\Beta\Domain\Response\TextBook\AddTextBookResponse;
 
@@ -25,7 +25,7 @@ class CreateTextBook
 
     public function execute(
         AddTextBookRequest $request,
-        TextBookPresenterInterface $presenter
+        CreateTextBookPresenterInterface $presenter
     ): void {
 
         $textBookEntry = TextBook::fromAddRequest($request);
