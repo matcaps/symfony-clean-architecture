@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
+use MatCaps\Beta\Domain\Entity\TextBook\SharedTextBook;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
 use MatCaps\Beta\Domain\Presenter\TextBook\ShareTextBookPresenterInterface;
@@ -89,11 +90,10 @@ class ShareCreateTextBookTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
+        $sharedTextBook = new SharedTextBook($this->textBook, $this->schoolClass);
+
         //pre-init shared Repository with textbook to provoque an exception at usecase run
-        $this->sharedTextBookRepository->share(
-            $this->textBook,
-            $this->schoolClass
-        );
+        $this->sharedTextBookRepository->share($sharedTextBook);
 
         $request = new ShareTextBookRequest($this->textBook, $this->schoolClass);
         $useCase = new ShareTextBook(

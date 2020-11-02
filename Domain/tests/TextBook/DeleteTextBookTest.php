@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use LogicException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
+use MatCaps\Beta\Domain\Entity\TextBook\SharedTextBook;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Gateway\TextBook\SharedTextBookGateway;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
@@ -60,7 +61,8 @@ class DeleteTextBookTest extends TestCase
         $this->expectException(LogicException::class);
 
         //init shared repository with an already shared textbook;
-        $isShared = $this->sharedTextBookRepository->share($this->textBook, $this->schoolClass);
+        $sharedTextBook = new SharedTextBook($this->textBook, $this->schoolClass);
+        $isShared = $this->sharedTextBookRepository->share($sharedTextBook);
         if ($isShared) {
             $this->textBook->markAsShared();
         }

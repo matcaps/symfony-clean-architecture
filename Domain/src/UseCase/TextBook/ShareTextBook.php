@@ -3,6 +3,7 @@
 namespace MatCaps\Beta\Domain\UseCase\TextBook;
 
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
+use MatCaps\Beta\Domain\Entity\TextBook\SharedTextBook;
 use MatCaps\Beta\Domain\Gateway\Generics\SchoolClassGateway;
 use MatCaps\Beta\Domain\Gateway\TextBook\SharedTextBookGateway;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
@@ -29,10 +30,9 @@ class ShareTextBook
 
     public function execute(): void
     {
-        $isShared = $this->textBookGateway->share(
-            $this->request->getTextBook(),
-            $this->request->getSchoolClass()
-        );
+        $sharedTextBook = new SharedTextBook($this->request->getTextBook(), $this->request->getSchoolClass());
+
+        $isShared = $this->textBookGateway->share($sharedTextBook);
         if ($isShared) {
             $this->request->getTextBook()->markAsShared();
         }
