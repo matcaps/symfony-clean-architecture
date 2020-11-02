@@ -24,4 +24,14 @@ class TextBookRepository implements TextBookGateway
     {
         return $this->items[$id] ?? null;
     }
+
+    public function findAll(): array
+    {
+        return $this->items;
+    }
+
+    public function remove(Textbook $textbook): void
+    {
+        unset($this->items[$textbook->getId()]);
+    }
 }

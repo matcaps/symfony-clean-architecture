@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Ports\Secondary\TextBook;
 
+use InvalidArgumentException;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Gateway\TextBook\SharedTextBookGateway;
@@ -12,12 +13,20 @@ use function array_push;
 
 class SharedTextBookRepository implements SharedTextBookGateway
 {
-    /** @var array  */
+    /** @var array */
     private array $items = [];
 
-    public function share(Textbook $textbook, SchoolClass $schoolClass): void
+    public function share(Textbook $textbook, SchoolClass $schoolClass): bool
     {
-        $this->items[$schoolClass->getId()][] = $textbook;
+        try {
+            if (isset($this->items[$schoolClass->getId()])) {
+                throw new InvalidArgumentException("Textbook is already shared");
+            }
+            $this->items[$schoolClass->getId()][] = $textbook;
+            return true;
+        } catch (InvalidArgumentException $exception) {
+            throw $exception;
+        }
     }
 
     /**

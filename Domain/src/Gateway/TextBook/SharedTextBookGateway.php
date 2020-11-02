@@ -7,7 +7,7 @@ use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 
 interface SharedTextBookGateway
 {
-    public function share(Textbook $textBook, SchoolClass $schoolClass): void;
+    public function share(Textbook $textBook, SchoolClass $schoolClass): bool;
 
     /**
      * @param SchoolClass $schoolClass

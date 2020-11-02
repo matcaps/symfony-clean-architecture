@@ -17,16 +17,8 @@ class Textbook
     private DateTimeInterface $dueAt;
     private Course $course;
     private SchoolClass $schoolClass;
+    private bool $isShared;
 
-    /**
-     * Textbook constructor.
-     * @param string $id
-     * @param string $content
-     * @param DateTimeInterface $dueAt
-     * @param Course $course
-     * @param SchoolClass $schoolClass
-     * @throws InvalidTextBookException
-     */
     public function __construct(
         string $id,
         string $content,
@@ -43,6 +35,7 @@ class Textbook
         $this->dueAt = $dueAt;
         $this->course = $course;
         $this->schoolClass = $schoolClass;
+        $this->isShared = false;
     }
 
     public static function fromAddRequest(AddTextBookRequest $request): self
@@ -94,5 +87,15 @@ class Textbook
     public function getDueAt(): DateTimeInterface
     {
         return $this->dueAt;
+    }
+
+    public function isShared(): bool
+    {
+        return $this->isShared;
+    }
+
+    public function markAsShared(): void
+    {
+        $this->isShared = true;
     }
 }

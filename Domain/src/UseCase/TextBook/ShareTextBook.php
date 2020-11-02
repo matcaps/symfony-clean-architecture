@@ -29,7 +29,13 @@ class ShareTextBook
 
     public function execute(): void
     {
-        $this->textBookGateway->share($this->request->getTextBook(), $this->request->getSchoolClass());
+        $isShared = $this->textBookGateway->share(
+            $this->request->getTextBook(),
+            $this->request->getSchoolClass()
+        );
+        if ($isShared) {
+            $this->request->getTextBook()->markAsShared();
+        }
         $sharedTextBookEntries = $this->textBookGateway->findAllSharedWith($this->request->getSchoolClass());
 
         $this->presenter->present(new ShareTextBookResponse($sharedTextBookEntries));

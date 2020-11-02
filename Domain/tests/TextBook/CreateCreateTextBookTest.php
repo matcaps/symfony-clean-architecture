@@ -66,6 +66,7 @@ class CreateCreateTextBookTest extends TestCase
         self::assertSame($uuid->toString(), $this->presenter->response->getId());
         self::assertSame("this is my textbook content", $this->presenter->response->getContent());
         self::assertSame($due, $this->presenter->response->getDueAt());
+        self::assertFalse($this->presenter->response->isShared());
     }
 
     /**

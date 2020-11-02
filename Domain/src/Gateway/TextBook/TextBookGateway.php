@@ -11,4 +11,8 @@ interface TextBookGateway
     public function add(TextBook $textBook): void;
 
     public function findById(string $id): ?Textbook;
+
+    public function findAll(): array;
+
+    public function remove(Textbook $textbook): void;
 }

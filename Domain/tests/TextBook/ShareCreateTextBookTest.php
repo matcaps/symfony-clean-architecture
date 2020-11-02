@@ -5,6 +5,7 @@ namespace MatCaps\Beta\Domain\Tests\TextBook;
 use App\Infrastructure\Ports\Secondary\TextBook\SharedTextBookRepository;
 use DateInterval;
 use DateTimeImmutable;
+use InvalidArgumentException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
@@ -76,6 +77,31 @@ class ShareCreateTextBookTest extends TestCase
 
         $useCase->execute();
 
-        self::assertInstanceOf(ShareTextBookResponse::class, $this->presenter->response);
+        /** @var ShareTextBookResponse $response */
+        $response = $this->presenter->response;
+
+        self::assertInstanceOf(ShareTextBookResponse::class, $response);
+        self::assertCount(1, $response->getEntries());
+        self::assertInstanceOf(Textbook::class, $response->getEntries()[0]);
+    }
+
+    public function testShareAlreadySharedTextBook(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        //pre-init shared Repository with textbook to provoque an exception at usecase run
+        $this->sharedTextBookRepository->share(
+            $this->textBook,
+            $this->schoolClass
+        );
+
+        $request = new ShareTextBookRequest($this->textBook, $this->schoolClass);
+        $useCase = new ShareTextBook(
+            $request,
+            $this->sharedTextBookRepository,
+            $this->presenter
+        );
+
+        $useCase->execute();
     }
 }
