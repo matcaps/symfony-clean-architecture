@@ -10,6 +10,8 @@
 
     <rule ref="PSR12"/>
 
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+
     <file>Domain/src/</file>
     <file>Domain/tests/</file>
 

@@ -8,7 +8,7 @@ help: ## Affiche cette aide
 
 .PHONY: test
 test: ##Lance les tests
-	./vendor/bin/pest
+	./vendor/bin/phpunit
 
 .PHONY: format
 format: ##formattage

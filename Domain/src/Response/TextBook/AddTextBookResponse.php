@@ -7,13 +7,10 @@ use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 
 class AddTextBookResponse
 {
-    /**
-     *
-     */
-    private Textbook $textbook;
     private string $id;
     private string $content;
     private DateTimeInterface $dueAt;
+    private bool $isShared;
 
     /**
      * AddTextBookResponse constructor.
@@ -21,33 +18,29 @@ class AddTextBookResponse
      */
     public function __construct(Textbook $textbook)
     {
-        $this->textbook = $textbook;
         $this->id = $textbook->getId();
         $this->content = $textbook->getContent();
         $this->dueAt = $textbook->getDueAt();
+        $this->isShared = $textbook->isShared();
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getDueAt(): DateTimeInterface
     {
         return $this->dueAt;
+    }
+
+    public function isShared(): bool
+    {
+        return $this->isShared;
     }
 }

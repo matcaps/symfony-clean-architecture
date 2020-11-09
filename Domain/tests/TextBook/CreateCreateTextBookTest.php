@@ -9,9 +9,9 @@ use Exception;
 use Generator;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
+use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
-use MatCaps\Beta\Domain\Presenter\TextBook\TextBookPresenterInterface;
+use MatCaps\Beta\Domain\Presenter\TextBook\CreateTextBookPresenterInterface;
 use MatCaps\Beta\Domain\Request\TextBook\AddTextBookRequest;
 use MatCaps\Beta\Domain\Response\TextBook\AddTextBookResponse;
 use MatCaps\Beta\Domain\Tests\TextBook\Repository\TextBookRepository;
@@ -21,41 +21,31 @@ use Ramsey\Uuid\Rfc4122\Validator;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class CreateTextBookTest extends TestCase
+class CreateCreateTextBookTest extends TestCase
 {
     private CreateTextBook $useCase;
     private Course $course;
     private SchoolClass $schoolClass;
-    private TextBookPresenterInterface $presenter;
+    private CreateTextBookPresenterInterface $presenter;
     private TextBookGateway $repository;
 
-    /**
-     *
-     */
+
     protected function setUp(): void
     {
         $this->course = new Course();
         $this->schoolClass = new SchoolClass();
         $this->repository = new TextBookRepository();
-        $this->presenter = new class implements TextBookPresenterInterface {
+        $this->presenter = new class implements CreateTextBookPresenterInterface {
             public AddTextBookResponse $response;
 
             public function present(AddTextBookResponse $response): void
             {
                 $this->response = $response;
             }
-
-            public function getResponse(): AddTextBookResponse
-            {
-                return $this->response;
-            }
         };
         $this->useCase = new CreateTextBook($this->repository);
     }
 
-    /**
-     *
-     */
     public function testSuccessfulAddATextBook(): void
     {
         $uuid = Uuid::uuid4();
@@ -71,11 +61,12 @@ class CreateTextBookTest extends TestCase
 
         $this->useCase->execute($request, $this->presenter);
 
-        self::assertInstanceOf(AddTextBookResponse::class, $this->presenter->getResponse());
-        self::assertTrue((new Validator())->validate($this->presenter->getResponse()->getId()));
-        self::assertSame($uuid->toString(), $this->presenter->getResponse()->getId());
-        self::assertSame("this is my textbook content", $this->presenter->getResponse()->getContent());
-        self::assertSame($due, $this->presenter->getResponse()->getDueAt());
+        self::assertInstanceOf(AddTextBookResponse::class, $this->presenter->response);
+        self::assertTrue((new Validator())->validate($this->presenter->response->getId()));
+        self::assertSame($uuid->toString(), $this->presenter->response->getId());
+        self::assertSame("this is my textbook content", $this->presenter->response->getContent());
+        self::assertSame($due, $this->presenter->response->getDueAt());
+        self::assertFalse($this->presenter->response->isShared());
     }
 
     /**

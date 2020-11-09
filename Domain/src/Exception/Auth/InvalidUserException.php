@@ -10,5 +10,5 @@ use Exception;
  */
 class InvalidUserException extends Exception
 {
-    
+
 }

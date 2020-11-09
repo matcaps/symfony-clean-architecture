@@ -5,9 +5,10 @@ namespace MatCaps\Beta\Domain\Entity\TextBook;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
+use LogicException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\Exception\InvalidTextBookException;
+use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
 use MatCaps\Beta\Domain\Request\TextBook\AddTextBookRequest;
 
 class Textbook
@@ -17,16 +18,8 @@ class Textbook
     private DateTimeInterface $dueAt;
     private Course $course;
     private SchoolClass $schoolClass;
+    private bool $isShared;
 
-    /**
-     * Textbook constructor.
-     * @param string $id
-     * @param string $content
-     * @param DateTimeInterface $dueAt
-     * @param Course $course
-     * @param SchoolClass $schoolClass
-     * @throws InvalidTextBookException
-     */
     public function __construct(
         string $id,
         string $content,
@@ -43,6 +36,7 @@ class Textbook
         $this->dueAt = $dueAt;
         $this->course = $course;
         $this->schoolClass = $schoolClass;
+        $this->isShared = false;
     }
 
     public static function fromAddRequest(AddTextBookRequest $request): self
@@ -94,5 +88,19 @@ class Textbook
     public function getDueAt(): DateTimeInterface
     {
         return $this->dueAt;
+    }
+
+    public function isShared(): bool
+    {
+        return $this->isShared;
+    }
+
+    public function share(): void
+    {
+        if ($this->isShared) {
+            throw new LogicException("Textbook cannot be shared if already shared");
+        }
+
+        $this->isShared = true;
     }
 }
