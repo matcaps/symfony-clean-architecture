@@ -1,8 +1,6 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Tests\TextBook\Repository;
-
 
 use LogicException;
 use MatCaps\Beta\Domain\Entity\TextBook\TextBookNote;

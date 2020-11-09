@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\UseCase\TextBook;
 
 use LogicException;
@@ -17,7 +16,6 @@ class AddNoteToTextBook
     private TextBookNoteGateway $textBookNoteGateway;
     private TextBookNoteGateway $gateway;
 
-
     public function __construct(
         AddNoteToTextBookRequest $request,
         TextbookAddNotePresenterInterface $presenter,
@@ -28,7 +26,7 @@ class AddNoteToTextBook
         $this->gateway = $gateway;
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         if (!$this->request->getTextbook()->isShared()) {
             throw new LogicException("Cannot add a note to an unshared textbook entry");

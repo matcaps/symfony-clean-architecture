@@ -1,15 +1,12 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Request\TextBook;
-
 
 use Assert\Assert;
 use Assert\LazyAssertionException;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookNoteException;
 use Ramsey\Uuid\UuidInterface;
-
 
 class AddNoteToTextBookRequest
 {
@@ -37,7 +34,7 @@ class AddNoteToTextBookRequest
     /**
      * @throws InvalidTextBookNoteException
      */
-    private function validate() : void
+    private function validate(): void
     {
         try {
             Assert::lazy()
@@ -64,8 +61,4 @@ class AddNoteToTextBookRequest
     {
         return $this->textbook;
     }
-
-
-
-
 }

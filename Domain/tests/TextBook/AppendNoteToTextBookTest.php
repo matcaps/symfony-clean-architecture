@@ -69,7 +69,7 @@ class AppendNoteToTextBookTest extends TestCase
             $this->textBook
         );
 
-        $useCase = new AddNoteToTextBook($request ,$this->presenter, $this->textBookNoteGateway);
+        $useCase = new AddNoteToTextBook($request, $this->presenter, $this->textBookNoteGateway);
         $useCase();
 
         $response = $this->presenter->response;
@@ -77,7 +77,6 @@ class AppendNoteToTextBookTest extends TestCase
         self::assertInstanceOf(AddNoteToTextBookResponse::class, $response);
         self::assertInstanceOf(TextBookNote::class, $response->getNote());
         self::assertSame($content, $response->getNote()->getContent());
-
     }
 
     public function testAddUnsuccessfullyNoteToUnsharedTextBook(): void
@@ -92,10 +91,7 @@ class AppendNoteToTextBookTest extends TestCase
             $this->textBook
         );
 
-        $useCase = new AddNoteToTextBook($request ,$this->presenter, $this->textBookNoteGateway);
+        $useCase = new AddNoteToTextBook($request, $this->presenter, $this->textBookNoteGateway);
         $useCase();
-
-
-
     }
 }

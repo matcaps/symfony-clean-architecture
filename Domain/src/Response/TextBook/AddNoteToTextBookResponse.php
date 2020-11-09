@@ -1,8 +1,6 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Response\TextBook;
-
 
 use MatCaps\Beta\Domain\Entity\TextBook\TextBookNote;
 
@@ -22,6 +20,4 @@ class AddNoteToTextBookResponse
     {
         return $this->note;
     }
-
-
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MatCaps\Beta\Domain\Entity\TextBook;
 
 use DateTimeImmutable;
@@ -22,7 +21,7 @@ class TextBookNote
     }
 
 
-    public static function fromAddRequest(AddNoteToTextBookRequest $request)
+    public static function fromAddRequest(AddNoteToTextBookRequest $request): self
     {
         return new self(
             $request->getUuid(),
@@ -31,7 +30,7 @@ class TextBookNote
     }
 
     /**  */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -45,6 +44,4 @@ class TextBookNote
     {
         return $this->id->toString();
     }
-
-
 }
