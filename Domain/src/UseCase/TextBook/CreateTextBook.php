@@ -22,12 +22,10 @@ class CreateTextBook
         $this->textBookGateway = $textBookGateway;
     }
 
-
     public function execute(
         AddTextBookRequest $request,
         CreateTextBookPresenterInterface $presenter
     ): void {
-
         $textBookEntry = TextBook::fromAddRequest($request);
         $this->textBookGateway->add($textBookEntry);
 

@@ -2,13 +2,12 @@
 
 namespace MatCaps\Beta\Domain\Tests\TextBook;
 
-use App\Infrastructure\Ports\Secondary\TextBook\SharedTextBookRepository;
 use DateInterval;
 use DateTimeImmutable;
 use InvalidArgumentException;
+use LogicException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\SharedTextBook;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
 use MatCaps\Beta\Domain\Presenter\TextBook\ShareTextBookPresenterInterface;
@@ -35,7 +34,6 @@ class ShareCreateTextBookTest extends TestCase
     private TextBookRepository $textBookRepository;
     private Textbook $textBook;
     private SchoolClass $schoolClass;
-    private SharedTextBookRepository $sharedTextBookRepository;
     private UuidInterface $uuid;
     private ShareTextBookPresenterInterface $presenter;
 
@@ -46,7 +44,6 @@ class ShareCreateTextBookTest extends TestCase
     {
         $this->uuid = Uuid::uuid4();
         $this->textBookRepository = new TextBookRepository();
-        $this->sharedTextBookRepository = new SharedTextBookRepository();
         $this->schoolClass = new SchoolClass();
         $this->presenter = new class implements ShareTextBookPresenterInterface {
             public ShareTextBookResponse $response;
@@ -69,14 +66,14 @@ class ShareCreateTextBookTest extends TestCase
 
     public function testShareSuccessfully(): void
     {
-        $request = new ShareTextBookRequest($this->textBook, $this->schoolClass);
+        $request = new ShareTextBookRequest($this->textBook);
         $useCase = new ShareTextBook(
             $request,
-            $this->sharedTextBookRepository,
+            $this->textBookRepository,
             $this->presenter
         );
 
-        $useCase->execute();
+        $useCase();
 
         /** @var ShareTextBookResponse $response */
         $response = $this->presenter->response;
@@ -88,20 +85,19 @@ class ShareCreateTextBookTest extends TestCase
 
     public function testShareAlreadySharedTextBook(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
-        $sharedTextBook = new SharedTextBook($this->textBook, $this->schoolClass);
+        $this->expectException(LogicException::class);
 
         //pre-init shared Repository with textbook to provoque an exception at usecase run
-        $this->sharedTextBookRepository->share($sharedTextBook);
+        $this->textBook->share();
+        $this->textBookRepository->update($this->textBook);
 
-        $request = new ShareTextBookRequest($this->textBook, $this->schoolClass);
+        $request = new ShareTextBookRequest($this->textBook);
         $useCase = new ShareTextBook(
             $request,
-            $this->sharedTextBookRepository,
+            $this->textBookRepository,
             $this->presenter
         );
 
-        $useCase->execute();
+        $useCase();
     }
 }

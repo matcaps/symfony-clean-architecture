@@ -5,6 +5,7 @@ namespace MatCaps\Beta\Domain\Entity\TextBook;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
+use LogicException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
 use MatCaps\Beta\Domain\Exception\TextBook\InvalidTextBookException;
@@ -94,8 +95,12 @@ class Textbook
         return $this->isShared;
     }
 
-    public function markAsShared(): void
+    public function share(): void
     {
+        if ($this->isShared) {
+            throw new LogicException("Textbook cannot be shared if already shared");
+        }
+
         $this->isShared = true;
     }
 }

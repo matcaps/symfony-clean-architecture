@@ -18,12 +18,10 @@ class ShareTextBookRequest
     /**
      * ShareTextBookRequest constructor.
      * @param Textbook $textBook
-     * @param SchoolClass $schoolClass
      */
-    public function __construct(TextBook $textBook, SchoolClass $schoolClass)
+    public function __construct(TextBook $textBook)
     {
         $this->textBook = $textBook;
-        $this->schoolClass = $schoolClass;
     }
 
     public function getTextBook(): Textbook
@@ -33,6 +31,6 @@ class ShareTextBookRequest
 
     public function getSchoolClass(): SchoolClass
     {
-        return $this->schoolClass;
+        return $this->getTextBook()->getSchoolClass();
     }
 }

@@ -15,4 +15,8 @@ interface TextBookGateway
     public function findAll(): array;
 
     public function remove(Textbook $textbook): void;
+
+    public function update(Textbook $textBook): bool;
+
+    public function findAllSharedWith(SchoolClass $schoolClass): array;
 }

@@ -2,15 +2,12 @@
 
 namespace MatCaps\Beta\Domain\Tests\TextBook;
 
-use App\Infrastructure\Ports\Secondary\TextBook\SharedTextBookRepository;
 use DateInterval;
 use DateTimeImmutable;
 use LogicException;
 use MatCaps\Beta\Domain\Entity\Generics\Course;
 use MatCaps\Beta\Domain\Entity\Generics\SchoolClass;
-use MatCaps\Beta\Domain\Entity\TextBook\SharedTextBook;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
-use MatCaps\Beta\Domain\Gateway\TextBook\SharedTextBookGateway;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
 use MatCaps\Beta\Domain\Request\TextBook\DeleteTextBookRequest;
 use MatCaps\Beta\Domain\Tests\TextBook\Repository\TextBookRepository;
@@ -24,14 +21,12 @@ class DeleteTextBookTest extends TestCase
     private Textbook $textBook;
     private UuidInterface $uuid;
     private SchoolClass $schoolClass;
-    private SharedTextBookGateway $sharedTextBookRepository;
     private TextBookGateway $textBookRepository;
 
     protected function setUp(): void
     {
         $this->uuid = Uuid::uuid4();
         $this->schoolClass = new SchoolClass();
-        $this->sharedTextBookRepository = new SharedTextBookRepository();
         $this->textBookRepository = new TextBookRepository();
         $this->textBook = new Textbook(
             $this->uuid->toString(),
@@ -61,11 +56,7 @@ class DeleteTextBookTest extends TestCase
         $this->expectException(LogicException::class);
 
         //init shared repository with an already shared textbook;
-        $sharedTextBook = new SharedTextBook($this->textBook, $this->schoolClass);
-        $isShared = $this->sharedTextBookRepository->share($sharedTextBook);
-        if ($isShared) {
-            $this->textBook->markAsShared();
-        }
+        $this->textBook->share();
 
         self::assertTrue($this->textBook->isShared());
 
