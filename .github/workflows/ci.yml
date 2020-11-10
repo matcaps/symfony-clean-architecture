@@ -35,7 +35,8 @@ jobs:
 
       - name: Install symfony executable
         run: |
-          wget https://get.symfony.com/cli/installer -O - | bash
+          wget https://get.symfony.com/cli/installer -O - | bash && mv /home/runner/.symfony/bin/symfony /usr/local/bin/symfony
+
       - name: Check symfony executable version
         run: |
             symfony --no-interaction
