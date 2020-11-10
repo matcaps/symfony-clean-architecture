@@ -35,6 +35,7 @@ class CreateCreateTextBookTest extends TestCase
         $this->course = new Course();
         $this->schoolClass = new SchoolClass();
         $this->repository = new TextBookRepository();
+
         $this->presenter = new class implements CreateTextBookPresenterInterface {
             public AddTextBookResponse $response;
 

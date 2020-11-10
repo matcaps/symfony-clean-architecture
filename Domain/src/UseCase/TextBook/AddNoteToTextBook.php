@@ -3,6 +3,7 @@
 namespace MatCaps\Beta\Domain\UseCase\TextBook;
 
 use LogicException;
+use MatCaps\Beta\Domain\Command\TextBook\TextBookNoteCommandInterface;
 use MatCaps\Beta\Domain\Entity\TextBook\TextBookNote;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookNoteGateway;
 use MatCaps\Beta\Domain\Presenter\TextBook\TextbookAddNotePresenterInterface;
@@ -15,6 +16,8 @@ class AddNoteToTextBook
     private TextbookAddNotePresenterInterface $presenter;
     private TextBookNoteGateway $textBookNoteGateway;
     private TextBookNoteGateway $gateway;
+
+
 
     public function __construct(
         AddNoteToTextBookRequest $request,
@@ -33,7 +36,7 @@ class AddNoteToTextBook
         }
 
         $note = TextBookNote::fromAddRequest($this->request);
-        $this->gateway->add($note);
+        $this->gateway->save($note);
 
         $textBookNoteEntry = $this->gateway->findById($note->getId());
 

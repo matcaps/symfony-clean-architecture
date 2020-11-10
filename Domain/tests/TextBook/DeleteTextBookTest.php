@@ -40,7 +40,7 @@ class DeleteTextBookTest extends TestCase
     public function testDeleteUnsharedTextBook(): void
     {
         //init repository with one textbook
-        $this->textBookRepository->add($this->textBook);
+        $this->textBookRepository->save($this->textBook);
 
         $request = new DeleteTextBookRequest($this->textBook);
         $useCase = new DeleteTextBook($request, $this->textBookRepository);

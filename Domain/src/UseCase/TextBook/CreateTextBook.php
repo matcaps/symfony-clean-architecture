@@ -2,6 +2,7 @@
 
 namespace MatCaps\Beta\Domain\UseCase\TextBook;
 
+use MatCaps\Beta\Domain\Command\TextBook\TextBookCommandInterface;
 use MatCaps\Beta\Domain\Entity\TextBook\Textbook;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookGateway;
 use MatCaps\Beta\Domain\Presenter\TextBook\CreateTextBookPresenterInterface;
@@ -13,10 +14,6 @@ class CreateTextBook
 
     private TextBookGateway $textBookGateway;
 
-    /**
-     * CreateTextBook constructor.
-     * @param TextBookGateway $textBookGateway
-     */
     public function __construct(TextBookGateway $textBookGateway)
     {
         $this->textBookGateway = $textBookGateway;
@@ -27,7 +24,7 @@ class CreateTextBook
         CreateTextBookPresenterInterface $presenter
     ): void {
         $textBookEntry = TextBook::fromAddRequest($request);
-        $this->textBookGateway->add($textBookEntry);
+        $this->textBookGateway->save($textBookEntry);
 
         $textBookEntry = $this->textBookGateway->findById($textBookEntry->getId());
 

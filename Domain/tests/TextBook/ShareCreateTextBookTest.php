@@ -61,7 +61,7 @@ class ShareCreateTextBookTest extends TestCase
             $this->schoolClass
         );
 
-        $this->textBookRepository->add($this->textBook);
+        $this->textBookRepository->save($this->textBook);
     }
 
     public function testShareSuccessfully(): void

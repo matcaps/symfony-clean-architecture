@@ -3,6 +3,7 @@
 namespace MatCaps\Beta\Domain\Tests\TextBook\Repository;
 
 use LogicException;
+use MatCaps\Beta\Domain\Command\TextBook\TextBookNoteCommandInterface;
 use MatCaps\Beta\Domain\Entity\TextBook\TextBookNote;
 use MatCaps\Beta\Domain\Gateway\TextBook\TextBookNoteGateway;
 
@@ -10,11 +11,6 @@ class TextBookNoteRepository implements TextBookNoteGateway
 {
     /** @var array<TextBookNote> */
     private array $items = [];
-
-    public function add(TextBookNote $note): void
-    {
-        $this->items[$note->getId()] = $note;
-    }
 
     public function findById(string $id): ?TextBookNote
     {
@@ -26,11 +22,6 @@ class TextBookNoteRepository implements TextBookNoteGateway
         return $this->items;
     }
 
-    public function remove(TextBookNote $note): void
-    {
-        unset($this->items[$note->getId()]);
-    }
-
     public function update(TextBookNote $note): bool
     {
         if (empty($this->items[$note->getId()])) {
@@ -38,6 +29,18 @@ class TextBookNoteRepository implements TextBookNoteGateway
         }
 
         $this->items[$note->getId()] = $note;
+        return true;
+    }
+
+    public function save(TextBookNote $note): bool
+    {
+        $this->items[$note->getId()] = $note;
+        return true;
+    }
+
+    public function remove(TextBookNote $note): bool
+    {
+        unset($this->items[$note->getId()]);
         return true;
     }
 }

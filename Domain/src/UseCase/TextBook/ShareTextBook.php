@@ -27,7 +27,7 @@ class ShareTextBook
 
     public function __invoke(): void
     {
-        $this->textBookGateway->add($this->request->getTextBook());
+        $this->textBookGateway->save($this->request->getTextBook());
         $this->request->getTextBook()->share();
         $this->textBookGateway->update($this->request->getTextBook());
 
