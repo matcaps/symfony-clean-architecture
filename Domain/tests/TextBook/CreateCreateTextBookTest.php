@@ -71,17 +71,17 @@ class CreateCreateTextBookTest extends TestCase
     }
 
     /**
-     * @dataProvider provideInvalidData
      * @param UuidInterface $id
      * @param string $content
-     * @param DateTimeInterface|null $dueAt
+     * @param DateTimeInterface $dueAt
      * @param Course $course
      * @param SchoolClass $schoolClass
+     * @param string $message
      */
     public function testErrorWhenAddingATextbook(
         UuidInterface $id,
         string $content,
-        ?DateTimeInterface $dueAt,
+        DateTimeInterface $dueAt,
         Course $course,
         SchoolClass $schoolClass,
         string $message

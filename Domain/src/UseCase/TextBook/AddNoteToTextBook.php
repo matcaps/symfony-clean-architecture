@@ -40,6 +40,9 @@ class AddNoteToTextBook
 
         $textBookNoteEntry = $this->gateway->findById($note->getId());
 
+        if (null === $textBookNoteEntry) {
+            throw new \RuntimeException("TextBookEntry cannot be null");
+        }
         $this->presenter->present(new AddNoteToTextBookResponse($textBookNoteEntry));
     }
 }

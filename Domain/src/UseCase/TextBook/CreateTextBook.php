@@ -27,6 +27,9 @@ class CreateTextBook
         $this->textBookGateway->save($textBookEntry);
 
         $textBookEntry = $this->textBookGateway->findById($textBookEntry->getId());
+        if (null === $textBookEntry) {
+            throw new \RuntimeException("textBookEntry cannot be null");
+        }
 
         $presenter->present(new AddTextBookResponse($textBookEntry));
     }
