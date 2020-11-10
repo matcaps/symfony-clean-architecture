@@ -44,5 +44,5 @@ jobs:
         run: php vendor/bin/phpcbf && php vendor/bin/phpcs
 
       - name: Launch Unit Tests
-        run: ./vendor/bin/pest --coverage --min=90
+        run: ./vendor/bin/phpunit
 
