@@ -77,6 +77,7 @@ class CreateCreateTextBookTest extends TestCase
      * @param Course $course
      * @param SchoolClass $schoolClass
      * @param string $message
+     * @dataProvider provideInvalidData
      */
     public function testErrorWhenAddingATextbook(
         UuidInterface $id,
